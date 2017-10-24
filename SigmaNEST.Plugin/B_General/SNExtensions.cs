@@ -16,20 +16,17 @@ namespace SigmaNEST.Plugin
 
             var snList = list as ISNListBase2;
 
-            if (snList != null)
+            if (snList == null)
+                return null;
+
+            snList.Reset();
+
+            while (!snList.EndOfList)
             {
-                snList.Reset();
-
-                while (!snList.EndOfList)
-                {
-                    var snObject = snList.GetCurrentAsISNObject();
-                    objectlist.Add((T)snObject);
-
-                    snList.MoveNext();
-                }
-                return objectlist;
+                objectlist.Add((T)snList.GetCurrentAsISNObject());
+                snList.MoveNext();
             }
-            return null;
+            return objectlist;
         }
 
         /// <summary>
